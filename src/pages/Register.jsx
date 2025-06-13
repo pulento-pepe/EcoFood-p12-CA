@@ -9,7 +9,9 @@ export default function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [nombre, setNombre] = useState("");
-    const [estadoCivil, setEstadoCivil] = useState("");
+    const [direccion, setDireccion] = useState("");
+    const [comuna, setComuna] = useState("");
+    const [telefono, setTelefono] = useState("");
 
     const [tipo, setTipo] = useState("cliente");
     const navigate = useNavigate();
@@ -34,18 +36,33 @@ export default function Register() {
             <form onSubmit={handleRegister}>
                 <div className="mb-3">
                     <label className="form-label">Nombre completo</label>
-                    <input type="text" className="form-control" value={nombre} onChange={(e) =>
-                    setNombre(e.target.value)} required />
+                    <input type="text" className="form-control" value={nombre}
+                    onChange={(e) => setNombre(e.target.value)} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Correo</label>
-                    <input type="email" className="form-control" value={email} onChange={(e) =>
-                    setEmail(e.target.value)} required />
+                    <input type="email" className="form-control" value={email} 
+                    onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Contraseña</label>
                     <input type="password" className="form-control" value={password}
                     onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Direccion</label>
+                    <input type="password" className="form-control" value={direccion}
+                    onChange={(e) => setDireccion(e.target.value)} required />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Comuna</label>
+                    <input type="password" className="form-control" value={comuna}
+                    onChange={(e) => setComuna(e.target.value)} required />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Telefono</label>
+                    <input type="password" className="form-control" value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Tipo de usuario</label>
