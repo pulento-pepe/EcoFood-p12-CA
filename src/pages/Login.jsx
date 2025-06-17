@@ -79,6 +79,14 @@ export default function Login() {
                 <button type="submit" className="btn btn-primary">
                     Iniciar Sesión
                 </button>
+
+                <button 
+                    type="button" 
+                    className="btn btn-link" 
+                    onClick={() => navigate("/RecContra")}
+                >
+                    ¿Olvidaste tu contraseña?
+                </button>
             </form>
         </div>
     );

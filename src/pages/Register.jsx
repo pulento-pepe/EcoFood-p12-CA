@@ -12,7 +12,8 @@ export default function Register() {
     const [direccion, setDireccion] = useState("");
     const [comuna, setComuna] = useState("");
     const [telefono, setTelefono] = useState("");
-    const [tipo, setTipo] = useState("cliente");
+    {/*const [tipo, setTipo] = useState("cliente");*/}
+    
 
     const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ export default function Register() {
                 direccion,
                 comuna,
                 telefono,
-                tipo,
+                tipo:'cliente',
                 email,
                 emailVerified: false
             });
@@ -105,15 +106,15 @@ export default function Register() {
                     <input type="text" className="form-control" value={telefono}
                         onChange={(e) => setTelefono(e.target.value)} required />
                 </div>
-                <div className="mb-3">
+                 {/*<div className="mb-3">
                     <label className="form-label">Tipo de usuario</label>
-                    <select className="form-select" value={tipo} onChange={(e) =>
+                    <select className="form-select" disabled value={tipo} onChange={(e) =>
                         setTipo(e.target.value)}>
                         <option value="cliente">Cliente</option>
                         <option value="empresa" disabled>Empresa</option>
                         <option value="admin" disabled>Administrador</option>
                     </select>
-                </div>
+                </div>*/}
                 <button type="submit" className="btn btn-success">Registrar</button>
             </form>
         </div>
