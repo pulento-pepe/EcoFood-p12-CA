@@ -5,7 +5,7 @@ import {
     signInWithEmailAndPassword,
     setPersistence,
     browserLocalPersistence,
-    signOut
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../services/firebase";
 import Swal from "sweetalert2";
@@ -20,35 +20,33 @@ export default function Login() {
         try {
             await setPersistence(auth, browserLocalPersistence);
             const cred = await signInWithEmailAndPassword(auth, email, password);
-
-            // ⚠️ Verificar si el correo está verificado
-            if (!cred.user.emailVerified) {
-                await signOut(auth); // Cerrar sesión inmediatamente
-                Swal.fire(
-                    "Correo no verificado",
-                    "Debes verificar tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.",
-                    "warning"
-                );
-                return;
-            }
-
             const datos = await getUserData(cred.user.uid);
             console.log("Bienvenido", datos.nombre, "Tipo:", datos.tipo);
             navigate("/home");
-
         } catch (error) {
-            console.error("Error al iniciar sesión:", error);
-            let mensaje = "Credenciales incorrectas.";
+            Swal.fire("Error", "Credenciales incorrectas", "error");
+        }
+    };
 
-            if (error.code === "auth/user-not-found") {
-                mensaje = "Usuario no registrado.";
-            } else if (error.code === "auth/wrong-password") {
-                mensaje = "Contraseña incorrecta.";
-            } else if (error.code === "auth/invalid-email") {
-                mensaje = "Correo no válido.";
+    const handleForgotPassword = async () => {
+        const { value: emailReset } = await Swal.fire({
+            title: "¿Olvidaste tu contraseña?",
+            input: "email",
+            inputLabel: "Ingresa tu correo electrónico",
+            inputPlaceholder: "correo@ejemplo.com",
+            showCancelButton: true,
+            confirmButtonText: "Enviar correo",
+            cancelButtonText: "Cancelar",
+        });
+
+        if (emailReset) {
+            try {
+                await sendPasswordResetEmail(auth, emailReset);
+                Swal.fire("Correo enviado", "Revisa tu bandeja de entrada", "success");
+            } catch (error) {
+                Swal.fire("Error", "No se pudo enviar el correo", "error");
+                console.error("Error enviando email de recuperación:", error);
             }
-
-            Swal.fire("Error", mensaje, "error");
         }
     };
 
@@ -79,13 +77,12 @@ export default function Login() {
                 <button type="submit" className="btn btn-primary">
                     Iniciar Sesión
                 </button>
-
-                <button 
-                    type="button" 
-                    className="btn btn-link" 
-                    onClick={() => navigate("/RecContra")}
+                <button
+                    type="button"
+                    className="btn btn-link"
+                    onClick={handleForgotPassword}
                 >
-                    ¿Olvidaste tu contraseña?
+                    ¿Olvidó su contraseña?
                 </button>
             </form>
         </div>
