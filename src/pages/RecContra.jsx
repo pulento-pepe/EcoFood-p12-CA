@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import './RecContra.css'; // Asegúrate de crear este archivo CSS
+import { useNavigate } from 'react-router-dom';
 
 const RecContra = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
-    const history = useHistory();
+    const navigate = useNavigate();
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -14,7 +14,8 @@ const RecContra = () => {
         
         // Redirigir a otra página después de enviar el correo
         setTimeout(() => {
-            history.push('/NuevaContra'); // Cambia '/otra-pagina' por la ruta deseada
+            //history.push('/NuevaContra'); // Cambia '/otra-pagina' por la ruta deseada
+            navigate("/login");
         }, 2000); // Espera 2 segundos antes de redirigir
     };
 

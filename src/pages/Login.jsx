@@ -20,13 +20,18 @@ export default function Login() {
         try {
             await setPersistence(auth, browserLocalPersistence);
             const cred = await signInWithEmailAndPassword(auth, email, password);
+            if (!cred.user.emailVerified) {
+                Swal.fire("Verificación requerida", "Debes verificar tu correo antes de ingresar.", "warning");
+                return;
+            }
             const datos = await getUserData(cred.user.uid);
-            console.log("Bienvenido", datos.nombre, "Tipo:", datos.tipo);
-            navigate("/home");
+            if (datos.tipo === "admin") navigate("/admin/dashboard");
+            else if (datos.tipo === "cliente") navigate("/cliente/dashboard");
         } catch (error) {
             Swal.fire("Error", "Credenciales incorrectas", "error");
         }
     };
+        
 
     const handleForgotPassword = async () => {
         const { value: emailReset } = await Swal.fire({
