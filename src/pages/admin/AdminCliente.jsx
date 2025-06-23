@@ -15,7 +15,7 @@ export default function AdminClientes() {
 
     const cargarClientes = async () => {
         const data = await getClientes();
-        setClientes(data);
+        setClientes(data.filter(c => c.tipo === 'cliente'));
     };
 
     const guardar = async () => {
