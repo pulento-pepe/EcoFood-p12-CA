@@ -1,44 +1,72 @@
-import { Routes, Route } from "react-router-dom";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Home from "../pages/Home";
-import ProtectedRoute from "./ProtectedRoute";
-import RecuperarContrasena from "../pages/RecContra";
-import ProtectedByRole from "./ProtectedByRole";
-//CLiente
-import ClienteDashboard from '../pages/cliente/ClienteDashboard';
-//Admin
-import AdminLayout from '../components/layouts/admin/AdminLayout';
-import AdminDashboard from "../pages/admin/AdminDashboard";
-import AdminProductos from '../pages/admin/AdminProductos';
-import AdminUsuarios from '../pages/admin/AdminCliente';
+// ✅ AppRouter.jsx
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import RecContra from '../pages/RecContra';
+import CerrarSesion from '../pages/CerrarSesion';
 
-export default function AppRouter() {
+// Admin Pages
+import AdminDashboard from '../pages/admin/AdminDashboard';
+import AdminEmpresas from '../pages/admin/AdminEmpresas';
+import AdminClientes from '../pages/admin/AdminClientes';
+import AdminAdministradores from '../pages/admin/AdminAdministradores';
+
+// Rutas protegidas
+import ProtectedByRole from './ProtectedByRole';
+
+import NavAdmin from '../components/layouts/admin/NavAdmin';
+
+const AppRouter = () => {
     return (
-        <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Login />} />
-            <Route path="/recuperar" element={<RecuperarContrasena />} />
-            <Route path="/registro" element={<Register />} />
-            <Route path="/home" element={
-                <ProtectedRoute>
-                    <Home />
-                </ProtectedRoute>
-            } />
-            <Route path="/cliente/dashboard" element={
-                <ProtectedByRole allowed={["cliente"]}>
-                    <ClienteDashboard />
-                </ProtectedByRole>
-            } />
-            <Route path="/admin" element={
-                <ProtectedByRole allowed={["admin"]}>
-                    <AdminLayout />
-                </ProtectedByRole>
-            }>
-                <Route path="dashboard" element={<AdminDashboard />} />
-                <Route path="productos" element={<AdminProductos />} />
-                <Route path="cliente" element={<AdminUsuarios />} />
-            </Route>
-        </Routes>
+        <Router>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/recuperar" element={<RecContra />} />
+                <Route path="/cerrarsesion" element={<CerrarSesion />} />
+
+                <Route
+                    path="/admin"
+                    element={
+                        <ProtectedByRole role="admin">
+                            <NavAdmin />
+                            <AdminDashboard />
+                        </ProtectedByRole>
+                    }
+                />
+
+                <Route
+                    path="/admin/empresas"
+                    element={
+                        <ProtectedByRole role="admin">
+                            <NavAdmin />
+                            <AdminEmpresas />
+                        </ProtectedByRole>
+                    }
+                />
+
+                <Route
+                    path="/admin/clientes"
+                    element={
+                        <ProtectedByRole role="admin">
+                            <NavAdmin />
+                            <AdminClientes />
+                        </ProtectedByRole>
+                    }
+                />
+
+                <Route
+                    path="/admin/administradores"
+                    element={
+                        <ProtectedByRole role="admin">
+                            <NavAdmin />
+                            <AdminAdministradores />
+                        </ProtectedByRole>
+                    }
+                />
+            </Routes>
+        </Router>
     );
-}
+};
+
+export default AppRouter;
