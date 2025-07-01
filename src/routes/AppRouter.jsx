@@ -29,12 +29,13 @@ const AppRouter = () => {
                 </ProtectedByRole>
                 }>
                 <Route path="" element={<AdminDashboard />} />
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="dash" element={<AdminDashboard />} />
+                <Route path="d" element={<AdminDashboard />} />
                 <Route path="empresas" element={<AdminEmpresas />} />
                 <Route path="clientes" element={<AdminClientes />} />
                 <Route path="administradores" element={<AdminAdministradores />} />
             </Route>
-
-           
         </Routes>
     );
 };

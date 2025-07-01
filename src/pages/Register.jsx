@@ -79,32 +79,43 @@ export default function Register() {
                 <div className="mb-3">
                     <label className="form-label">Nombre completo</label>
                     <input type="text" className="form-control" value={nombre}
-                        onChange={(e) => setNombre(e.target.value)} required />
+                        onChange={(e) => setNombre(e.target.value)} maxLength={50}required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Correo</label>
                     <input type="email" className="form-control" value={email}
-                        onChange={(e) => setEmail(e.target.value)} required />
+                        onChange={(e) => setEmail(e.target.value)} maxLength={40} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Contraseña</label>
                     <input type="password" className="form-control" value={password}
-                        onChange={(e) => setPassword(e.target.value)} required />
+                        onChange={(e) => setPassword(e.target.value)} maxLength={12}required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Dirección</label>
                     <input type="text" className="form-control" value={direccion}
-                        onChange={(e) => setDireccion(e.target.value)} required />
+                        onChange={(e) => setDireccion(e.target.value)} maxLength={50}required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Comuna</label>
                     <input type="text" className="form-control" value={comuna}
-                        onChange={(e) => setComuna(e.target.value)} required />
+                        onChange={(e) => setComuna(e.target.value)} maxLength={50} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Teléfono</label>
-                    <input type="text" className="form-control" value={telefono}
-                        onChange={(e) => setTelefono(e.target.value)} required />
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={telefono}
+                            onChange={(e) => {
+                                const numericValue = e.target.value.replace(/\D/g, ''); // Elimina cualquier carácter no numérico
+                                setTelefono(numericValue);
+                            }}
+                            minLength={9}
+                            maxLength={9}
+                            pattern="\d{9}" // Asegura que solo se acepten 9 dígitos
+                            required
+                        />
                 </div>
                  {/*<div className="mb-3">
                     <label className="form-label">Tipo de usuario</label>
