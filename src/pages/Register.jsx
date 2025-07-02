@@ -79,27 +79,27 @@ export default function Register() {
                 <div className="mb-3">
                     <label className="form-label">Nombre completo</label>
                     <input type="text" className="form-control" value={nombre}
-                        onChange={(e) => setNombre(e.target.value)} maxLength={50}required />
+                        onChange={(e) => setNombre(e.target.value)} minLength={20} maxLength={50}required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Correo</label>
                     <input type="email" className="form-control" value={email}
-                        onChange={(e) => setEmail(e.target.value)} maxLength={40} required />
+                        onChange={(e) => setEmail(e.target.value)} minLength={10} maxLength={40} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Contraseña</label>
                     <input type="password" className="form-control" value={password}
-                        onChange={(e) => setPassword(e.target.value)} maxLength={12}required />
+                        onChange={(e) => setPassword(e.target.value)} minLength={12} maxLength={12}required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Dirección</label>
                     <input type="text" className="form-control" value={direccion}
-                        onChange={(e) => setDireccion(e.target.value)} maxLength={50}required />
+                        onChange={(e) => setDireccion(e.target.value)} minLength={10} maxLength={50}required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Comuna</label>
                     <input type="text" className="form-control" value={comuna}
-                        onChange={(e) => setComuna(e.target.value)} maxLength={50} required />
+                        onChange={(e) => setComuna(e.target.value)} minLength={10} maxLength={50} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Teléfono</label>
@@ -117,7 +117,7 @@ export default function Register() {
                             required
                         />
                 </div>
-                 {/*<div className="mb-3">
+                {/*<div className="mb-3">
                     <label className="form-label">Tipo de usuario</label>
                     <select className="form-select" disabled value={tipo} onChange={(e) =>
                         setTipo(e.target.value)}>

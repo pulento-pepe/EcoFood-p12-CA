@@ -79,13 +79,103 @@ const AdminAdministradores = () => {
     fetchAdmins();
   }, []);
 
+  // Validaciones
+  const NOMBRE_MIN = 3, NOMBRE_MAX = 30;
+  const EMAIL_MIN = 6, EMAIL_MAX = 50;
+  const PASS_MIN = 6, PASS_MAX = 30;
+
+  const validarNombre = (nombre) => {
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    return (
+      regex.test(nombre) &&
+      nombre.length >= NOMBRE_MIN &&
+      nombre.length <= NOMBRE_MAX
+    );
+  };
+
+  const validarEmail = (email) => {
+    return email.length >= EMAIL_MIN && email.length <= EMAIL_MAX;
+  };
+
+  const validarPassword = (password) => {
+    return password.length >= PASS_MIN && password.length <= PASS_MAX;
+  };
+
   return (
     <div>
       <h2>Gestión de Administradores</h2>
-      <form onSubmit={handleSubmit}>
-        <FormInput label="Nombre" value={formData.nombre} onChange={e => setFormData({ ...formData, nombre: e.target.value})} required />
-        <FormInput label="Email" type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} required />
-        <FormInput label="Contraseña" type="password" value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} required={!editId} />
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          if (!validarNombre(formData.nombre)) {
+            Swal.fire(
+              'Error',
+              `El nombre debe tener solo letras y entre ${NOMBRE_MIN} y ${NOMBRE_MAX} caracteres.`,
+              'error'
+            );
+            return;
+          }
+          if (!validarEmail(formData.email)) {
+            Swal.fire(
+              'Error',
+              `El email debe tener entre ${EMAIL_MIN} y ${EMAIL_MAX} caracteres.`,
+              'error'
+            );
+            return;
+          }
+          if (!editId && !validarPassword(formData.password)) {
+            Swal.fire(
+              'Error',
+              `La contraseña debe tener entre ${PASS_MIN} y ${PASS_MAX} caracteres.`,
+              'error'
+            );
+            return;
+          }
+          handleSubmit(e);
+        }}
+      >
+        <FormInput
+          label="Nombre"
+          value={formData.nombre}
+          onChange={e => {
+            // Solo permitir letras y espacios en tiempo real
+            const val = e.target.value;
+            if (/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/.test(val) && val.length <= NOMBRE_MAX) {
+              setFormData({ ...formData, nombre: val });
+            }
+          }}
+          required
+          minLength={NOMBRE_MIN}
+          maxLength={NOMBRE_MAX}
+        />
+        <FormInput
+          label="Email"
+          type="email"
+          value={formData.email}
+          onChange={e => {
+            const val = e.target.value;
+            if (val.length <= EMAIL_MAX) {
+              setFormData({ ...formData, email: val });
+            }
+          }}
+          required
+          minLength={EMAIL_MIN}
+          maxLength={EMAIL_MAX}
+        />
+        <FormInput
+          label="Contraseña"
+          type="password"
+          value={formData.password}
+          onChange={e => {
+            const val = e.target.value;
+            if (val.length <= PASS_MAX) {
+              setFormData({ ...formData, password: val });
+            }
+          }}
+          required={!editId}
+          minLength={PASS_MIN}
+          maxLength={PASS_MAX}
+        />
         <button type="submit">{editId ? 'Actualizar' : 'Crear'} Administrador</button>
       </form>
       <table>
@@ -112,8 +202,35 @@ const AdminAdministradores = () => {
                 )}
               </td>
               <td>
-                <button onClick={() => handleEdit(admin)} disabled={admin.isPrincipal}>Editar</button>
-                <button onClick={() => handleDelete(admin.id, admin.email)} disabled={admin.isPrincipal}>Eliminar</button>
+                <button
+                  onClick={() => handleEdit(admin)}
+                  disabled={admin.isPrincipal}
+                  style={{
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '6px 12px',
+                    borderRadius: '4px',
+                    marginRight: '8px',
+                    cursor: admin.isPrincipal ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => handleDelete(admin.id, admin.email)}
+                  disabled={admin.isPrincipal}
+                  style={{
+                    backgroundColor: '#dc3545',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '6px 12px',
+                    borderRadius: '4px',
+                    cursor: admin.isPrincipal ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Eliminar
+                </button>
               </td>
             </tr>
           ))}
