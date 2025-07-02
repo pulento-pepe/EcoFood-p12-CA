@@ -176,7 +176,7 @@ const AdminAdministradores = () => {
           minLength={PASS_MIN}
           maxLength={PASS_MAX}
         />
-        <button type="submit">{editId ? 'Actualizar' : 'Crear'} Administrador</button>
+        <button className="btn btn-success" button type="submit">{editId ? 'Actualizar' : 'Crear'} Administrador</button>
       </form>
       <table>
         <thead>

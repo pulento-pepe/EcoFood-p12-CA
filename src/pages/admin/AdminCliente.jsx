@@ -121,19 +121,19 @@ export default function AdminClientes() {
                                     className="form-control mb-2"
                                     placeholder="Nombre"
                                     value={formData.nombre}
-                                    onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+                                    onChange={(e) => setFormData({ ...formData, nombre: e.target.value })} maxLength={30} minLength={3} pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" title="El nombre debe contener solo letras (3-30 caracteres)"
                                 />
                                 <input
                                     className="form-control mb-2"
                                     placeholder="Email"
                                     value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })} maxLength={40} minLength={5} type="email" title="El email debe ser válido" disabled={clienteActivo ? true : false}
                                 />
                                 <input
                                     className="form-control mb-2"
                                     placeholder="Comuna"
                                     value={formData.comuna}
-                                    onChange={(e) => setFormData({ ...formData, comuna: e.target.value })}
+                                    onChange={(e) => setFormData({ ...formData, comuna: e.target.value })}maxLength={30} minLength={3} pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" title="La comuna debe contener solo letras (3-30 caracteres)"
                                 />
                                 {!clienteActivo && (
                                     <input
@@ -141,7 +141,7 @@ export default function AdminClientes() {
                                         className="form-control mb-2"
                                         placeholder="Contraseña"
                                         value={formData.password}
-                                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                        onChange={(e) => setFormData({ ...formData, password: e.target.value })} maxLength={30} minLength={6} title="La contraseña debe tener al menos 6 caracteres" required={!clienteActivo} pattern=".{6,}"
                                     />
                                 )}
                             </div>
